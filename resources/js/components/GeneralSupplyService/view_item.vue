@@ -23,7 +23,8 @@
                                 style="padding: 0.70rem 1.25rem!important;background-color:transparent!important;color:black">
                                 <h5 class="card-title"><i class="fa fa-star"></i> {{item.procurement}}</h5>
                             </div>
-                            <form action="/api/savePR" method="POST" @submit="addToCart()">
+
+                            <form action="/api/create_pr_item" method="POST" @submit="addToCart()">
                                 <div class="card-body">
                                     <div>
                                         <div class="row">
@@ -32,8 +33,8 @@
                                                     <label>
                                                         Serial No:
                                                     </label>
-                                                    <input type="text" class="form-control" :value="item.serial_no"
-                                                        name="" :disabled="disabled" />
+                                                    <input v-model="item.serial_no" type="text" class="form-control"
+                                                        :disabled="disabled" />
                                                 </div>
 
                                             </div>
@@ -42,7 +43,9 @@
                                                     <label>
                                                         Quantity:
                                                     </label>
-                                                    <input type="number" class="form-control" name="" />
+                                                    <input v-model="form.quantity" type="number" class="form-control" />
+                                                    <small>{{qty_error}}</small>
+
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -50,8 +53,8 @@
                                                     <label>
                                                         ABC:
                                                     </label>
-                                                    <input type="text" class="form-control" :value="item.app_price"
-                                                        name="" :disabled="disabled" />
+                                                    <input v-model="item.app_price" type="text" class="form-control"
+                                                        :disabled="disabled" />
                                                 </div>
                                             </div>
                                         </div>
@@ -61,8 +64,11 @@
 
                                                 <div class="form-group">
                                                     <label>Details/Other Instructions</label>
-                                                    <textarea class="form-control" value="" name="" cols="161"
-                                                        rows="5"></textarea>
+                                                    <textarea v-model="form.description" class="form-control" name=""
+                                                        cols="161" rows="5">
+                                                </textarea>
+                                                    <small>{{description_error}}</small>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +80,7 @@
                                                         Unit:
                                                     </label>
                                                     <input type="text" class="form-control"
-                                                        :value="item.item_unit_title" name="" :disabled="disabled" />
+                                                        v-model="item.item_unit_title" name="" :disabled="disabled" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -83,7 +89,7 @@
                                                         Category:
                                                     </label>
                                                     <input type="text" class="form-control"
-                                                        :value="item.item_category_title" name=""
+                                                        v-model="item.item_category_title" name=""
                                                         :disabled="disabled" />
                                                 </div>
                                             </div>
@@ -93,7 +99,8 @@
                                                         Mode:
                                                     </label>
                                                     <input type="text" class="form-control"
-                                                        :value="item.mode_of_proc_title" name="" :disabled="disabled" />
+                                                        v-model="item.mode_of_proc_title" name=""
+                                                        :disabled="disabled" />
                                                 </div>
                                             </div>
                                         </div>
@@ -102,10 +109,9 @@
                                             <div class="col-md-12">
                                                 <div class="form-group float-right">
                                                     <div class="d-grid gap-2 d-md-block">
-                                                        <button     
-                                                        @click.prevent="reservedPRNo"  
-                                                        class="btn btn-success btn-md" 
-                                                        type="button"><i class="fa fa-save"></i> Add to
+                                                        <button @click.prevent="addToCart"
+                                                            class="btn btn-success btn-md" type="submit"><i
+                                                                class="fa fa-save"></i> Add to
                                                             Cart</button>
                                                     </div>
                                                 </div>
@@ -134,6 +140,10 @@
     width: auto !important;
 
 }
+
+small {
+    color: red;
+}
 </style>
 <script>
 import SidebarMenu from '../Sidebar-Menu.vue';
@@ -146,26 +156,55 @@ export default {
             item: '',
             disabled: true,
             form: {
-                txtserial_no: '',
-                txtquantity: '',
-                txtabc: '',
-                txtdetails: '',
-                txtunit: '',
-                txtcategory: '',
-                textmode: ''
-            }
+                description: '',
+                quantity: ''
+            },
+            description_error: '',
+            qty_error: '',
+            data: ''
+
 
         }
     },
     mounted() {
         axios.get(`../../api/appitems/${this.$route.params.id}`).then((res) => {
             this.item = res.data
-            this.addToCart(res.data.app_id);
+            this.showPR()
         })
     },
     methods: {
-        addToCart(id) {
-           console.log(id);
+        addToCart() {
+            axios.post('/api/create_pr_item', {
+                id: null,
+                app_id: this.$route.params.id,
+                pr_id: this.$route.query.pr_no,
+                description: this.form.description,
+                unit_id: this.item.unit_id,
+                qty: this.form.quantity,
+                abc: this.item.app_price
+            }
+
+            ).then(() => {
+                window.location = "/GeneralSupplyService/create_pr/" + this.data.pr_no;
+            }).catch((error) => {
+                this.errors = error.response.data.errors;
+
+                if (this.form.description == '' || this.form.quantity == '' ) {
+                    this.qty_error = this.errors.qty[0];
+                    this.description_error = this.errors.description[0];
+                    
+                } else{
+                    this.qty_error = '';
+                }
+                // else if () {
+                //     this.qty_error = this.errors.qty[0];
+                // }
+            })
+        },
+        showPR() {
+            axios.get(`../../api/procurement/${this.$route.query.pr_no}`).then((res) => {
+                this.data = res.data
+            })
         }
     },
     components: {

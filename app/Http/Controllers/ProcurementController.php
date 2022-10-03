@@ -1,9 +1,10 @@
 <?php
 
-    namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-    use Illuminate\Http\Request;
-    use App\Models\ProcurementModel;
+use Illuminate\Http\Request;
+use App\Models\ProcurementModel;
+use App\Models\ProcurementItems;
 
 
 class ProcurementController extends Controller
@@ -20,27 +21,46 @@ class ProcurementController extends Controller
 
     public function generatePRNo()
     {
-        return response()->json(ProcurementModel::
-        select(ProcurementModel::raw('id,pr_no,YEAR(pr_date) as pr_date'))
-        ->limit(1)
-        ->orderby('id','DESC')
-        ->get());
+        return response()->json(ProcurementModel::select(ProcurementModel::raw('id,pr_no,YEAR(pr_date) as pr_date'))
+            ->limit(1)
+            ->orderby('id', 'DESC')
+            ->get());
     }
-   
 
-    public function ReservedPurchaseNo(Request $request )
+
+    public function ReservedPurchaseNo(Request $request)
     {
-     
+
         ProcurementModel::create($request->all());
 
         return (['message' => 'successfull']);
     }
-    public function savePR(Request $request )
+    public function create_pr_item(Request $request)
     {
-     
-        ProcurementModel::create($request->all());
+        $request->validate([
+            'qty' => ['required','max:255'],
+            'description' => ['required'],
+        ]);
 
-        return (['message' => 'successfull']);
+        $app_item = new ProcurementItems([
+            'id'          => $request->input('id'),
+            'app_id'      => $request->input('app_id'),
+            'pr_id'       => $request->input('pr_id'),
+            'description' => $request->description,
+            'unit_id'     => $request->input('unit_id'),
+            'qty'         => $request->qty,
+            'abc'         => $request->input('abc'),
+        ]);
+        $app_item->save();
+        return response()->json('Product created!');
+        // ProcurementItems::create($request->all());
+
+        // return (['message' => 'successfull']);
+    }
+
+    public function findPurchaseNo($id)
+    {
+        return response()->json(ProcurementModel::find($id));
     }
 
 

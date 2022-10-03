@@ -37,10 +37,16 @@ Route::middleware('api')->group(function () {
     Route::get('tbl_procurement', [ProcurementController::class, 'generatePRNo']);
 });
 
+Route::middleware('api')->group(function () {
+    Route::get('procurement/{id}', [ProcurementController::class, 'findPurchaseNo']);
+});
+
 
 //inserting data
 Route::post('ReservedPurchaseNo', 'ProcurementController@ReservedPurchaseNo');
+Route::post('create_pr_item', 'ProcurementController@create_pr_item');
 Route::post('savePR', 'ProcurementController@savePR');
+// Route::get('findPurchaseNo','ProcurementController@findPurchaseNo');
 
 
 

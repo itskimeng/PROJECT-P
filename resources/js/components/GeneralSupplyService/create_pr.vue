@@ -45,16 +45,11 @@
                             <div class="card-body" style="height:auto;">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">
-                                      <div class="form-group"><label>Purchase Request Number: </label>
-                                        
-                            <input 
-                            v-model="client_pr.pr_no"
-                            :disabled="disabled"
-                            name="pr_no"
-                            type="text"
-                            class="form-control" 
-                            />
-                                    </div>
+                                        <div class="form-group"><label>Purchase Request Number: </label>
+
+                                            <input v-model="client_pr.pr_no" :disabled="disabled" name="pr_no"
+                                                type="text" class="form-control" />
+                                        </div>
                                     </div>
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                         <label>Office:</label>
@@ -94,7 +89,13 @@
                     <div class="col-lg-9">
                         <div class="card">
                             <div class="card-body">
+                                <span class="fa-layers fa-fw" style="font-size: 50px;float: right;margin-top: -10px;">
+                                    <i class="fa-solid fa-envelope"></i>
+
+                                    <span class="fa-layers-counter" style="background:Tomato">1,419</span>
+                                </span>
                                 <h2>GRAND TOTAL: ₱ 0.00</h2>
+
 
                                 <input type="text" v-model="searchValue" class="form-control" name="" id="" />
                             </div>
@@ -105,30 +106,26 @@
                             <div class="row" style="margin-top: 25px  ;">
                                 <div class="col-lg-2 d-none d-lg-block" v-for="item in userList" v-bind:key="item.id">
                                     <div class="card">
-                                        <router-link 
-                                        :to="{
-                                            name: 'view item', 
-                                            params: { id: item.id }, 
-                                            query: { 
-                                                pr_no:client_pr.id,
-                                                app_id:item.id
-                                                }
-                                                }"
-                                            style="color:black">
+                                        <router-link :to="{
+                                                                                    name: 'view item', 
+                                                                                    params: { id: item.id }, 
+                                                                                    query: { 
+                                        pr_no:client_pr.id,
+                                        app_id:item.id
+                                        }
+                                        }" style="color:black">
 
                                             <img src="../../../assets/proc1.jpg" class="card-img-top"
                                                 alt="Sunset Over the Sea" />
                                         </router-link>
-                                        <router-link 
-                                        :to="{
-                                            name: 'view item', 
-                                            params: { id: item.id }, 
-                                            query: { 
-                                                pr_no:client_pr.id,
-                                                app_id:item.id
-                                                }
-                                                }"
-                                            style="color:black">
+                                        <router-link :to="{
+                                                                                    name: 'view item', 
+                                                                                    params: { id: item.id }, 
+                                                                                    query: { 
+                                        pr_no:client_pr.id,
+                                        app_id:item.id
+                                        }
+                                        }" style="color:black">
                                             <p style="margin-top: -30px;text-align:center">
                                                 {{shorten(item.procurement,11)+'..'}}</p>
                                         </router-link>
@@ -149,7 +146,7 @@
 
 <style>
 h2 {
-    float: right;
+    float: left;
 }
 
 .app_img {
@@ -185,12 +182,12 @@ export default {
             user: '',
             products: null,
             pr: [],
-            client_pr:{
-                id:null,
-                pr_no:null,
+            client_pr: {
+                id: null,
+                pr_no: null,
 
             },
-            disabled:true,
+            disabled: true,
             pageOfItems: [],
             selected: '',
             sel_office: '',
@@ -202,7 +199,7 @@ export default {
                 'Supplies, Materials and Devices',
                 'Other Services'
             ],
-            offices:[
+            offices: [
                 'ORD',
                 'FAD',
                 'LGMED',
@@ -214,6 +211,7 @@ export default {
         }
     },
     computed: {
+        // 1. searching function
         userList: function () {
             var app_item = this.products;
             var searchValue = this.searchValue.trim().toLowerCase();
@@ -251,10 +249,15 @@ export default {
 
     },
     methods: {
+        // 1. shorten the character of each app item.
         shorten: function (string, len) {
             return string.substring(0, len + string.substring(len - 1).indexOf(' '));
 
         },
+        countCart(){
+            // 1. get the pr id for returning all number of item in the cart
+            // 2. show details with info.
+        }
 
     },
     components: {

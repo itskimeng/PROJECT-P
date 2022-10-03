@@ -112,7 +112,6 @@ export default {
             axios.post('/api/ReservedPurchaseNo',{ pr_no: this.pr_no}
             ).then(() => {
                 window.location = "/GeneralSupplyService/create_pr/"+this.pr_no;
-
             }).catch((error) => {
                 this.errors = error.response.data.errors;
             })

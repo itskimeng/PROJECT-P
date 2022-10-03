@@ -1,6 +1,8 @@
 <template>
+     
     <nav aria-label="breadcrumb" style="margin-top:-2.5rem!important;">
-        <ol class="breadcrumb">
+        
+        <ol class="breadcrumb ml-auto">
             <li class="breadcrumb-item">
                 <router-link :to="to" style="color:black">{{title}}</router-link>
                 <!-- <router-link to="/dashboard">{{user.name}}</router-link> -->
@@ -10,6 +12,8 @@
 
                 <!-- <router-link to="/dashboard">{{user.name}}</router-link> -->
             </li>
+           
+        
         </ol>
     </nav>
 </template>

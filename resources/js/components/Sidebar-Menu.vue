@@ -1,6 +1,8 @@
 <template>
     <div class="sidebar" :class="isOpened ? 'open' : ''" :style="cssVars">
+
         <div class="logo-details" style="margin: 6px 14px 0 14px;">
+
             <img v-if="menuLogo" :src="menuLogo" alt="menu-logo" class="menu-logo icon">
             <img v-else class="bx icon" src="../../assets/logo.png" />
             <div class="logo_name">
@@ -8,10 +10,11 @@
             </div>
             <i class="bx" :class="isOpened ? 'bx-menu-alt-right' : 'bx-menu'" id="btn" @click="isOpened = !isOpened" />
         </div>
-
+        
         <div
             style="display: flex ; flex-direction:column; justify-content: space-between; flex-grow: 1; max-height: calc(100% - 60px); ">
             <div id="my-scroll" style="margin: 6px 14px 0 14px;">
+              
                 <ul class="nav-list" style="overflow: visible;">
                     <li v-if="isSearch" @click="isOpened = true">
                         <i class="bx bx-search" />
@@ -52,6 +55,8 @@
 </template>
 
 <script>
+import Navbar from "./Navbar.vue";
+
 export default {
     name: 'Sidebar-Menu',
     props: {
@@ -246,6 +251,9 @@ export default {
         isOpened() {
             window.document.body.style.paddingLeft = this.isOpened && this.isPaddingLeft ? this.menuOpenedPaddingLeftBody : this.menuClosedPaddingLeftBody
         }
+    },
+    components:{
+      Navbar
     }
 }
 </script>

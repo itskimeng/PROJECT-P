@@ -113,7 +113,8 @@
                                                             <ol class="breadcrumb">
                                                                 <li class="breadcrumb-item">
 
-                                                                    <button @click="createNew()" class="btn btn-sm btn-warning">
+                                                                    <button @click="createNew()"
+                                                                        class="btn btn-sm btn-warning">
                                                                         <i class="fa fa-plus-circle"></i>
                                                                         Create
                                                                         Purchase Request
@@ -793,9 +794,7 @@ export default {
         return { height: '99px' }
     },
     mounted() {
-        // axios.get('/api/user').then((res) => {
-        //     this.user = res.data
-        // })
+        $('#itemModal').modal('hide');
 
         const ctx = document.getElementById('myChart').getContext('2d');
         const ctx_proc = document.getElementById('procurement').getContext('2d');
@@ -875,7 +874,7 @@ export default {
         ProcChart;
     },
     methods: {
-        createNew(){
+        createNew() {
             this.$router.push('/GeneralSupplyService/create_new')
         },
         logout() {
