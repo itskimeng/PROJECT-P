@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppItemController;
 use App\Http\Controllers\ProcurementController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -41,11 +42,20 @@ Route::middleware('api')->group(function () {
     Route::get('procurement/{id}', [ProcurementController::class, 'findPurchaseNo']);
 });
 
+Route::middleware('api')->group(function () {
+    Route::get('count/{id}', [ProcurementController::class, 'countCart']);
+});
+
+Route::post('savePRInfo/{id}', 'ProcurementController@updatePRDetails');
+
 
 //inserting data
 Route::post('ReservedPurchaseNo', 'ProcurementController@ReservedPurchaseNo');
 Route::post('create_pr_item', 'ProcurementController@create_pr_item');
 Route::post('savePR', 'ProcurementController@savePR');
+
+
+
 // Route::get('findPurchaseNo','ProcurementController@findPurchaseNo');
 
 

@@ -17,7 +17,7 @@ class AppItemController extends Controller
     {
         return response()->json(AppItem::where('year', 2022)
             ->orderBy('procurement')
-            ->limit(100)
+            ->limit(1000)
             ->get());
     }
     public function show($id)

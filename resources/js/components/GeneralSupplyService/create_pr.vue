@@ -43,45 +43,57 @@
                         </div>
                         <div class="card">
                             <div class="card-body" style="height:auto;">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <div class="form-group"><label>Purchase Request Number: </label>
+                                <form action="/api/savePurchaseRequestInfo" method="POST"
+                                    @submit="savePurchaseRequestInfo()">
+                                    <div class="row">
 
-                                            <input v-model="client_pr.pr_no" :disabled="disabled" name="pr_no"
-                                                type="text" class="form-control" />
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group"><label>Purchase Request Number: </label>
+
+                                                <input v-model="client_pr.pr_no" :disabled="disabled" name="pr_no"
+                                                    type="text" class="form-control" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <label>Office:</label>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <label>Office:</label>
 
-                                        <select v-model="sel_office" class="form-control">
-                                            <option disabled value="">Please Select</option>
-                                            <option v-for="office in offices" :value="office">{{office}}</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <label>Type:</label>
-                                        <select v-model="selected" class="form-control">
-                                            <option disabled value="">Please Select</option>
-                                            <option v-for="option in options" :value="option">{{option}}</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 12px;">
-                                        <FormInput type="date" class="form-control" name="" id="" value="FAD">Purchase
-                                            Request Date:
-                                        </FormInput>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <FormInput type="date" class="form-control" name="" id="" value="FAD">Purchase
-                                            Request Target:
-                                        </FormInput>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <textarea class="form-control" cols="161" rows="5"></textarea>
+                                            <select v-model="this.user.office" class="form-control">
+                                                <option disabled value="">Please Select</option>
+                                                <option disabled v-for="office in offices" :value="office.id">
+                                                    {{office.value}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <label>Type:</label>
+                                            <select @change="onChange($event)" v-model="selected" class="form-control">
+                                                <option v-for="pr_type in options" :key="pr_type.id"
+                                                    :value="pr_type.id">{{
+                                                    pr_type.name }}
+                                                </option>
+                                            </select>
+                                            {{selected.id}}
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 12px ">
+                                            <label>Purchase Request Date:</label>
+                                            <input type="date" v-model="this.form.pr_date" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <label>Purchase Request Target Date:</label>
+                                            <input type="date" v-model="this.form.target_date" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <label>Purpose:</label>
+                                            <textarea v-model="this.form.purpose" class="form-control" cols="161"
+                                                rows="5"></textarea>
+
+                                        </div>
+                                        <button type="submit" @click.prevent="savePurchaseRequestInfo()"
+                                            class="btn btn-info btn-lg col-md-12" style="margin-top: 5px;"><i
+                                                class="fa fa-save"></i> Save</button>
 
                                     </div>
-
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -90,11 +102,12 @@
                         <div class="card">
                             <div class="card-body">
                                 <span class="fa-layers fa-fw" style="font-size: 50px;float: right;margin-top: -10px;">
-                                    <i class="fa-solid fa-envelope"></i>
+                                    <i class="bx bx-cart"></i>
 
-                                    <span class="fa-layers-counter" style="background:Tomato">1,419</span>
+                                    <span class="fa-layers-counter"
+                                        style="background:Tomato;margin-top:8px;margin-right: -7px;font-size: 54pt;">{{this.cartInfo.cart}}</span>
                                 </span>
-                                <h2>GRAND TOTAL: ₱ 0.00</h2>
+                                <h2>GRAND TOTAL: ₱ {{this.cartInfo.gTotal}}</h2>
 
 
                                 <input type="text" v-model="searchValue" class="form-control" name="" id="" />
@@ -170,9 +183,7 @@ import BreadCrumbs from '../BreadCrumbs.vue';
 import FormInput from '../FormInput.vue';
 import AppData from "./app_data.json";
 import axios from 'axios';
-import JwPagination from 'jw-vue-pagination';
 import ModalPRNoCreate from './ModalPRNoCreate.vue';
-
 
 export default {
     name: 'create_new',
@@ -180,30 +191,41 @@ export default {
     data() {
         return {
             user: '',
-            products: null,
-            pr: [],
+            cartInfo: {
+                cart: null,
+                gTotal: null
+            },
             client_pr: {
                 id: null,
                 pr_no: null,
+            },
+            form: {
+                office: null,
+                pr_date: null,
+                target_date: null,
+                purpose: null
 
             },
             disabled: true,
             pageOfItems: [],
-            selected: '',
-            sel_office: '',
+            pr: [],
             nodata: false,
+            products: null,
+            sel_type: null,
+            selected: '',
             options: [
-                'Catering Services',
-                'Meals, Venu and Accomodation',
-                'Repair and Maintenance',
-                'Supplies, Materials and Devices',
-                'Other Services'
+                { id: 1, name: 'Catering Services' },
+                { id: 2, name: 'Meals, Venu and Accomodation' },
+                { id: 3, name: 'Repair and Maintenance' },
+                { id: 4, name: 'Supplies, Materials and Devices' },
+                { id: 5, name: 'Other Services' }
             ],
             offices: [
-                'ORD',
-                'FAD',
-                'LGMED',
-                'LGCDD'
+                { id: 1, value: 'ORD' },
+                { id: 2, value: 'FAD' },
+                { id: 3, value: 'LGCDD' },
+                { id: 4, value: 'LGMED' },
+
             ],
             searchValue: '',
             users: AppData,
@@ -239,32 +261,67 @@ export default {
             this.pr = res.data
             this.client_pr.pr_no = res.data[0].pr_no;
             this.client_pr.id = res.data[0].id;
+            this.countCart(this.client_pr.id);
+
         })
-
-        // axios.get(`../../api/getUserInfo`).then((res) => {
-        //     this.pr = res.data
-        //     console.log(res.data);
-        // })
-
+        this.userInfo();
 
     },
     methods: {
+        userInfo() {
+            axios.get(`../../api/user`).then((res) => {
+                this.user = res.data
+            })
+        },
         // 1. shorten the character of each app item.
         shorten: function (string, len) {
             return string.substring(0, len + string.substring(len - 1).indexOf(' '));
 
         },
-        countCart(){
+        countCart(id) {
             // 1. get the pr id for returning all number of item in the cart
             // 2. show details with info.
+            // 3. select count(*) from pr_items where pr_id = id
+            axios.get(`/api/count/${id}`).then((res) => {
+                this.cartInfo.cart = res.data[0].cart;
+                this.cartInfo.gTotal = res.data[0].gTotal.toFixed(2)
+            })
+        },
+        onChange(event) {
+            this.selected = event.target.value;
+
+        },
+        savePurchaseRequestInfo() {
+            //1. get the pr id for updating the pr table information.
+            //2. get all text input values for validation
+            //3. save all data 
+            let data = {
+                office: this.user.office,
+                user_id: this.user.id,
+                pr_date: this.form.pr_date,
+                target_date: this.form.target_date,
+                purpose: this.form.purpose,
+                type: this.selected,
+            };
+            axios.post(`/api/savePRInfo/${this.client_pr.id}`,data).then(() => {
+                // this.redirect('create_pr');
+            }).catch((error) => {
+                this.errors = error.response.data.errors;
+
+            })
+
+        },
+        redirect(path) {
+            window.location = "/GeneralSupplyService/" + path + "/" + this.data.pr_no;
+
         }
+
 
     },
     components: {
         SidebarMenu,
         BreadCrumbs,
         FormInput,
-        JwPagination,
         ModalPRNoCreate
     }
 }

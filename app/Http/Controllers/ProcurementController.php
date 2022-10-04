@@ -58,6 +58,16 @@ class ProcurementController extends Controller
         // return (['message' => 'successfull']);
     }
 
+    public function countCart($id)
+    {
+        
+        // return response()->json(ProcurementItems::select(ProcurementModel::raw('count(*)'))->find($id));
+        return response()->json(ProcurementItems::select(ProcurementItems::raw('count(*) as cart,  sum(qty * abc) as "gTotal" '))->where('pr_id',$id)
+        ->get());
+
+
+    }
+
     public function findPurchaseNo($id)
     {
         return response()->json(ProcurementModel::find($id));
@@ -115,9 +125,16 @@ class ProcurementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updatePRDetails(Request $request, $id)
     {
-        //
+        $pr = ProcurementModel::find($id);
+
+        $pr->pr_date = $request->pr_date;
+        $pr->target_date = $request->target_date;
+        $pr->office = $request->office;
+        $pr->purpose = $request->purpose;
+        $pr->save();
+       
     }
 
     /**

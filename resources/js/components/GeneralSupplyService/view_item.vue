@@ -182,9 +182,7 @@ export default {
                 unit_id: this.item.unit_id,
                 qty: this.form.quantity,
                 abc: this.item.app_price
-            }
-
-            ).then(() => {
+            }).then(() => {
                 window.location = "/GeneralSupplyService/create_pr/" + this.data.pr_no;
             }).catch((error) => {
                 this.errors = error.response.data.errors;

@@ -21,6 +21,6 @@ export default {
         <label>
         <slot />
         </label>
-        <input :type="type" :class="class" :name="name" :value="value" :disabled="disabled" />
+        <input :type="type" :class="class"  :disabled="disabled" />
     </div>
 </template>

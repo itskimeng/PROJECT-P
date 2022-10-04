@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-lg-2">
                 <div class="container">
-                        <SidebarMenu />
+                    <SidebarMenu />
                 </div>
             </div>
             <div class="col-lg-12">
-            
+
                 <BreadCrumbsVue to="dashboard" from="" title="Dashboard" />
                 <div class="row">
                     <div class="col-lg-3 col-xs-6">
@@ -84,7 +84,7 @@
                     <div class="col-xl-5 col-lg-6">
                         <div class="row">
                             <div class="col-sm-12">
-                                
+
                                 <div class="card">
                                     <div class="tab-content" id="nav-tabContent">
                                         <div class="card">
@@ -105,7 +105,7 @@
                                                                 <p>Mark Kim Sacluti<br>Oct. 10, 1996</p>
                                                                 <img :src="image5" class="greet-cake" />
                                                                 <img :src="image1"
-                                                                    class="rounded img-thumbnail img-style" src=""
+                                                                    class="rounded img-thumbnail img-style"
                                                                     alt="First slide" />
                                                             </div>
 
@@ -116,7 +116,7 @@
                                                                 <img :src="image5" class="greet-cake" />
 
                                                                 <img :src="image2"
-                                                                    class="rounded img-thumbnail img-style" src=""
+                                                                    class="rounded img-thumbnail img-style"
                                                                     alt="First slide" />
                                                             </div>
                                                         </div>
@@ -125,7 +125,7 @@
                                                                 <img :src="image5" class="greet-cake" />
 
                                                                 <img :src="image3"
-                                                                    class="rounded img-thumbnail img-style" src=""
+                                                                    class="rounded img-thumbnail img-style"
                                                                     alt="First slide" />
                                                             </div>
                                                         </div>
@@ -863,7 +863,7 @@ export default {
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',    
+                        'rgba(75, 192, 192, 1)',
 
                     ],
                     borderWidth: 0
@@ -880,7 +880,7 @@ export default {
         myChart;
         ProcChart;
     },
-    
+
     name: "Calendar",
     components: {
         Navbar,
