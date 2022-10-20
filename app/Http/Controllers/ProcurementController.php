@@ -7,6 +7,7 @@ use App\Models\ProcurementModel;
 use App\Models\ProcurementItems;
 
 
+
 class ProcurementController extends Controller
 {
     /**
@@ -71,6 +72,21 @@ class ProcurementController extends Controller
     public function findPurchaseNo($id)
     {
         return response()->json(ProcurementModel::find($id));
+    }
+
+    public function viewPRDetails($id){
+       return response()->json(ProcurementModel::select('*')
+        ->leftJoin('procurement_items', 'procurement_models.id', '=', 'procurement_items.pr_id')
+        ->leftJoin('app_items', 'procurement_items.app_id', '=', 'app_items.id')
+        ->where('procurement_models.id',$id)->get());
+
+    }
+    
+    public function fetchPurchaseRequestList(){
+
+        return response()->json(ProcurementModel::select('id','pr_no','purpose','office','user_id','admin_id','action_date','pr_date','target_date','submitted_date','received_date','received_by')
+            ->orderby('ID','desc')
+            ->get());
     }
 
 

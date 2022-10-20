@@ -43,10 +43,21 @@ Route::middleware('api')->group(function () {
 });
 
 Route::middleware('api')->group(function () {
+    Route::get('view_pr/{id}', [ProcurementController::class, 'viewPRDetails']);
+});
+
+
+
+Route::middleware('api')->group(function () {
     Route::get('count/{id}', [ProcurementController::class, 'countCart']);
 });
 
 Route::post('savePRInfo/{id}', 'ProcurementController@updatePRDetails');
+
+// datatables
+Route::middleware('api')->group(function () {
+    Route::get('fetchPurchaseRequestList', [ProcurementController::class, 'fetchPurchaseRequestList']);
+});
 
 
 //inserting data

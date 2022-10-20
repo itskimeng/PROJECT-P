@@ -141,9 +141,6 @@
 
 }
 
-small {
-    color: red;
-}
 </style>
 <script>
 import SidebarMenu from '../Sidebar-Menu.vue';

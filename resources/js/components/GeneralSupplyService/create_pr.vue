@@ -1,160 +1,150 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-2">
-                <div class="container">
-                    <SidebarMenu />
-                </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="container">
+                <SidebarMenu />
             </div>
-            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-12">
-                <BreadCrumbs to="index" from="" fromtitle="Create Purchase Request"
-                    title="General Supply and Service" />
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="alert filter">
-                                    <span><strong><i class="glyphicon glyphicon-info-sign"></i></strong>
-                                        Legend :</span>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td class="tdSpacing">
-                                                    <div style="width:20px;height:20px;background-color:#a3e381;"></div>
-                                                </td>
-                                                <td class="tdSpacing">&nbsp;Urgent</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="tdSpacing">
-                                                    <div style="width:20px;height:20px;background-color:#e3c281;"></div>
-                                                </td>
-                                                <td class="tdSpacing">&nbsp;Cancelled</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="tdSpacing">
-                                                    <div style="width:20px;height:20px;background-color:#81aae3;"></div>
-                                                </td>
-                                                <td class="tdSpacing">&nbsp;Obligated</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body" style="height:auto;">
-                                <form action="/api/savePurchaseRequestInfo" method="POST"
-                                    @submit="savePurchaseRequestInfo()">
-                                    <div class="row">
-
-                                        <div class="col-sm-12 col-md-12 col-lg-12">
-                                            <div class="form-group"><label>Purchase Request Number: </label>
-
-                                                <input v-model="client_pr.pr_no" :disabled="disabled" name="pr_no"
-                                                    type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12">
-                                            <label>Office:</label>
-
-                                            <select v-model="this.user.office" class="form-control">
-                                                <option disabled value="">Please Select</option>
-                                                <option disabled v-for="office in offices" :value="office.id">
-                                                    {{office.value}}</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12">
-                                            <label>Type:</label>
-                                            <select @change="onChange($event)" v-model="selected" class="form-control">
-                                                <option v-for="pr_type in options" :key="pr_type.id"
-                                                    :value="pr_type.id">{{
-                                                    pr_type.name }}
-                                                </option>
-                                            </select>
-                                            {{selected.id}}
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 12px ">
-                                            <label>Purchase Request Date:</label>
-                                            <input type="date" v-model="this.form.pr_date" class="form-control" />
-                                        </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12">
-                                            <label>Purchase Request Target Date:</label>
-                                            <input type="date" v-model="this.form.target_date" class="form-control" />
-                                        </div>
-                                        <div class="col-sm-12 col-md-12 col-lg-12">
-                                            <label>Purpose:</label>
-                                            <textarea v-model="this.form.purpose" class="form-control" cols="161"
-                                                rows="5"></textarea>
-
-                                        </div>
-                                        <button type="submit" @click.prevent="savePurchaseRequestInfo()"
-                                            class="btn btn-info btn-lg col-md-12" style="margin-top: 5px;"><i
-                                                class="fa fa-save"></i> Save</button>
-
-                                    </div>
-                                </form>
+        </div>
+        <div class="col-sm-12 col-md-12 col-xs-12 col-lg-12">
+            <BreadCrumbs to="index" from="" fromtitle="Create Purchase Request" title="General Supply and Service" />
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="alert filter">
+                                <span><strong><i class="glyphicon glyphicon-info-sign"></i></strong>
+                                    Legend :</span>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td class="tdSpacing">
+                                                <div style="width:20px;height:20px;background-color:#a3e381;"></div>
+                                            </td>
+                                            <td class="tdSpacing">&nbsp;Urgent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdSpacing">
+                                                <div style="width:20px;height:20px;background-color:#e3c281;"></div>
+                                            </td>
+                                            <td class="tdSpacing">&nbsp;Cancelled</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdSpacing">
+                                                <div style="width:20px;height:20px;background-color:#81aae3;"></div>
+                                            </td>
+                                            <td class="tdSpacing">&nbsp;Obligated</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-body" style="height:auto;">
+                            <form action="/api/savePurchaseRequestInfo" method="POST" @submit="savePurchaseRequestInfo()">
+                                <div class="row">
 
-                    <div class="col-lg-9">
-                        <div class="card">
-                            <div class="card-body">
-                                <span class="fa-layers fa-fw" style="font-size: 50px;float: right;margin-top: -10px;">
-                                    <i class="bx bx-cart"></i>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="form-group"><label>Purchase Request Number: </label>
 
-                                    <span class="fa-layers-counter"
-                                        style="background:Tomato;margin-top:8px;margin-right: -7px;font-size: 54pt;">{{this.cartInfo.cart}}</span>
-                                </span>
-                                <h2>GRAND TOTAL: ₱ {{this.cartInfo.gTotal}}</h2>
-
-
-                                <input type="text" v-model="searchValue" class="form-control" name="" id="" />
-                            </div>
-                        </div>
-
-                        <div class=" card card-body" style="height: 660px;overflow-y:auto">
-
-                            <div class="row" style="margin-top: 25px  ;">
-                                <div class="col-lg-2 d-none d-lg-block" v-for="item in userList" v-bind:key="item.id">
-                                    <div class="card">
-                                        <router-link :to="{
-                                                                                    name: 'view item', 
-                                                                                    params: { id: item.id }, 
-                                                                                    query: { 
-                                        pr_no:client_pr.id,
-                                        app_id:item.id
-                                        }
-                                        }" style="color:black">
-
-                                            <img src="../../../assets/proc1.jpg" class="card-img-top"
-                                                alt="Sunset Over the Sea" />
-                                        </router-link>
-                                        <router-link :to="{
-                                                                                    name: 'view item', 
-                                                                                    params: { id: item.id }, 
-                                                                                    query: { 
-                                        pr_no:client_pr.id,
-                                        app_id:item.id
-                                        }
-                                        }" style="color:black">
-                                            <p style="margin-top: -30px;text-align:center">
-                                                {{shorten(item.procurement,11)+'..'}}</p>
-                                        </router-link>
-                                        <p style="margin-top: -20px;text-align:center">Php. {{item.app_price}}</p>
+                                            <input v-model="client_pr.pr_no" :disabled="disabled" name="pr_no" type="text" class="form-control" />
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <label>Office:</label>
 
-                            </div>
+                                        <select v-model="this.user.office" class="form-control">
+                                            <option disabled value="">Please Select</option>
+                                            <option disabled v-for="office in offices" :value="office.id">
+                                                {{office.value}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <label>Type:</label>
+                                        <select @change="onChange($event)" v-model="selected" class="form-control">
+                                            <option v-for="pr_type in options" :key="pr_type.id" :value="pr_type.id">{{
+                                                    pr_type.name }}
+                                            </option>
+                                        </select>
+                                        {{selected.id}}
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 12px ">
+                                        <label>Purchase Request Date:</label>
+                                        <input type="date" v-model="this.form.pr_date" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <label>Purchase Request Target Date:</label>
+                                        <input type="date" v-model="this.form.target_date" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <label>Purpose:</label>
+                                        <textarea v-model="this.form.purpose" class="form-control" cols="161" rows="5"></textarea>
+
+                                    </div>
+                                    <button type="submit" @click.prevent="savePurchaseRequestInfo()" class="btn btn-info btn-lg col-md-12" style="margin-top: 5px;"><i class="fa fa-save"></i> Save</button>
+
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
+                <div class="col-lg-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <span class="fa-layers fa-fw" style="font-size: 50px;float: right;margin-top: -10px;">
+                                <i class="bx bx-cart"></i>
+
+                                <span class="fa-layers-counter" style="background:Tomato;margin-top:8px;margin-right: -7px;font-size: 54pt;">{{this.cartInfo.cart}}</span>
+                            </span>
+                            <h2>GRAND TOTAL: ₱ {{this.cartInfo.gTotal}}</h2>
+
+                            <input type="text" v-model="searchValue" class="form-control" name="" id="" />
+                        </div>
+                    </div>
+
+                    <div class=" card card-body" style="height: 660px;overflow-y:auto">
+
+                        <div class="row" style="margin-top: 25px  ;">
+                            <div class="col-lg-2 d-none d-lg-block" v-for="item in userList" v-bind:key="item.id">
+                                <div class="card">
+                                    <router-link :to="{
+                                        name: 'view item', 
+                                        params: { id: item.id }, 
+                                        query: { 
+                                        pr_no:client_pr.id,
+                                        app_id:item.id
+                                        }
+                                        }" style="color:black">
+
+                                        <img src="../../../assets/proc1.jpg" class="card-img-top" alt="Sunset Over the Sea" />
+                                    </router-link>
+                                    <router-link :to="{
+                                        name: 'view item', 
+                                        params: { id: item.id }, 
+                                        query: { 
+                                        pr_no:client_pr.id,
+                                        app_id:item.id
+                                        }
+                                        }" style="color:black">
+                                        <p style="margin-top: -30px;text-align:center">
+                                            {{shorten(item.procurement,11)+'..'}}</p>
+                                    </router-link>
+                                    <p style="margin-top: -20px;text-align:center">Php. {{item.app_price}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
+
     </div>
+</div>
 </template>
 
 <style>
@@ -213,18 +203,43 @@ export default {
             products: null,
             sel_type: null,
             selected: '',
-            options: [
-                { id: 1, name: 'Catering Services' },
-                { id: 2, name: 'Meals, Venu and Accomodation' },
-                { id: 3, name: 'Repair and Maintenance' },
-                { id: 4, name: 'Supplies, Materials and Devices' },
-                { id: 5, name: 'Other Services' }
+            options: [{
+                    id: 1,
+                    name: 'Catering Services'
+                },
+                {
+                    id: 2,
+                    name: 'Meals, Venu and Accomodation'
+                },
+                {
+                    id: 3,
+                    name: 'Repair and Maintenance'
+                },
+                {
+                    id: 4,
+                    name: 'Supplies, Materials and Devices'
+                },
+                {
+                    id: 5,
+                    name: 'Other Services'
+                }
             ],
-            offices: [
-                { id: 1, value: 'ORD' },
-                { id: 2, value: 'FAD' },
-                { id: 3, value: 'LGCDD' },
-                { id: 4, value: 'LGMED' },
+            offices: [{
+                    id: 1,
+                    value: 'ORD'
+                },
+                {
+                    id: 2,
+                    value: 'FAD'
+                },
+                {
+                    id: 3,
+                    value: 'LGCDD'
+                },
+                {
+                    id: 4,
+                    value: 'LGMED'
+                },
 
             ],
             searchValue: '',
@@ -303,8 +318,8 @@ export default {
                 purpose: this.form.purpose,
                 type: this.selected,
             };
-            axios.post(`/api/savePRInfo/${this.client_pr.id}`,data).then(() => {
-                // this.redirect('create_pr');
+            axios.post(`/api/savePRInfo/${this.client_pr.id}`, data).then(() => {
+                // router.push({name:'create_pr',params:{id: this.client_pr.pr_no}});
             }).catch((error) => {
                 this.errors = error.response.data.errors;
 
@@ -315,7 +330,6 @@ export default {
             window.location = "/GeneralSupplyService/" + path + "/" + this.data.pr_no;
 
         }
-
 
     },
     components: {

@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <div class="card">
+    <!-- <div class="card">
                             <div class="card-body" style="height:475px;">
                                 <div class="alert filter">
                                     <span><strong><i class="glyphicon glyphicon-info-sign"></i></strong> Legend :</span>
@@ -48,7 +48,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 </template>
 <script>
 import avatar from '../../../assets/c1.jpg';

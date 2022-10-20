@@ -15,6 +15,7 @@ import index from "../components/GeneralSupplyService/index.vue";
 import create_new from "../components/GeneralSupplyService/create_new.vue";
 import view_item from "../components/GeneralSupplyService/view_item.vue";
 import create_pr from "../components/GeneralSupplyService/create_pr.vue";
+import view_pr from "../components/GeneralSupplyService/form/pr_view_form.vue";
 
 import axios from "axios";
 
@@ -63,6 +64,11 @@ const routes = [
         path: '/GeneralSupplyService/create_pr/:id',
         name: 'create item',
         component: create_pr
+    },
+    {
+        path: '/GeneralSupplyService/view/:id',
+        name: 'view pr',
+        component: view_pr
     },
     {
         path: '/dashboard',

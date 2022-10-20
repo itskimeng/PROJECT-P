@@ -11,74 +11,7 @@
                     title="General Supply and Service" />
                 <div class="row">
                     <div class="col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="alert filter">
-                                    <span><strong><i class="glyphicon glyphicon-info-sign"></i></strong>
-                                        Legend :</span>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td class="tdSpacing">
-                                                    <div style="width:20px;height:20px;background-color:#a3e381;"></div>
-                                                </td>
-                                                <td class="tdSpacing">&nbsp;Urgent</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="tdSpacing">
-                                                    <div style="width:20px;height:20px;background-color:#e3c281;"></div>
-                                                </td>
-                                                <td class="tdSpacing">&nbsp;Cancelled</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="tdSpacing">
-                                                    <div style="width:20px;height:20px;background-color:#81aae3;"></div>
-                                                </td>
-                                                <td class="tdSpacing">&nbsp;Obligated</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body" style="height:auto;">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <FormInput type="text" class="form-control" name="" id="" value="2022-01-0001">
-                                            Purchase
-                                            Request
-                                            Number:</FormInput>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <FormInput type="text" class="form-control" name="" id="" value="FAD">Office:
-                                        </FormInput>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <label>Type:</label>
-                                        <select v-model="selected" class="form-control">
-                                            <option disabled value="">Please Select</option>
-                                            <option v-for="option in options" :value="option">{{option}}</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 12px;">
-                                        <FormInput type="date" class="form-control" name="" id="" value="FAD">Purchase
-                                            Request Date:
-                                        </FormInput>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <FormInput type="date" class="form-control" name="" id="" value="FAD">Purchase
-                                            Request Target:
-                                        </FormInput>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <textarea class="form-control" cols="161" rows="5"></textarea>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+                        <PRDetailsForm/>
                     </div>
 
                     <div class="col-lg-9">
@@ -114,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-
+                    
 
             </div>
 
@@ -150,6 +83,7 @@ import AppData from "./app_data.json";
 import axios from 'axios';
 import JwPagination from 'jw-vue-pagination';
 import ModalPRNoCreate from './ModalPRNoCreate.vue';
+import PRDetailsForm from './form/pr_details_form.vue';
 const exampleItems = [...Array(150).keys()].map(i => ({ id: (i + 1), name: 'Item ' + (i + 1) }));
 
 export default {
@@ -226,7 +160,8 @@ export default {
         BreadCrumbs,
         FormInput,
         JwPagination,
-        ModalPRNoCreate
+        ModalPRNoCreate,
+        PRDetailsForm
     }
 }
 

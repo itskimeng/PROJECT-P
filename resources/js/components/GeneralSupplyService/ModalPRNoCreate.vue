@@ -73,6 +73,8 @@
     }
 </style>
 <script>
+import router from '../../router';
+
 export default {
     name: 'create_new',
     data() {
@@ -111,7 +113,8 @@ export default {
         reservedPRNo(){
             axios.post('/api/ReservedPurchaseNo',{ user_id: this.user_id,pr_no: this.pr_no}
             ).then(() => {
-                // window.location = "/GeneralSupplyService/create_pr/"+this.pr_no;
+                window.location = "/GeneralSupplyService/create_pr/"+this.pr_no;
+                // router.push({name: 'GeneralSupplyService',params:{id:this.pr_no}})
             }).catch((error) => {
                 this.errors = error.response.data.errors;
             })

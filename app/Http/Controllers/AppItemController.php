@@ -15,9 +15,10 @@ class AppItemController extends Controller
     }
     public function getAppData()
     {
-        return response()->json(AppItem::where('year', 2022)
+        return response()->json(AppItem::select('id','procurement','app_price','year')
+            ->where('year', 2022)
             ->orderBy('procurement')
-            ->limit(1000)
+            ->limit(100)
             ->get());
     }
     public function show($id)
