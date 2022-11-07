@@ -16,7 +16,7 @@ import create_new from "../components/GeneralSupplyService/create_new.vue";
 import view_item from "../components/GeneralSupplyService/view_item.vue";
 import create_pr from "../components/GeneralSupplyService/create_pr.vue";
 import view_pr from "../components/GeneralSupplyService/form/pr_view_form.vue";
-
+import updateForm from "../components/GeneralSupplyService/form/pr_update_form.vue";
 import axios from "axios";
 
 const routes = [
@@ -69,6 +69,11 @@ const routes = [
         path: '/GeneralSupplyService/view/:id',
         name: 'view pr',
         component: view_pr
+    },
+    {
+        path: '/GeneralSupplyService/update/:id',
+        name: 'update pr',
+        component: updateForm
     },
     {
         path: '/dashboard',

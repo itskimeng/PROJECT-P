@@ -79,10 +79,9 @@ a {
 import SidebarMenu from '../Sidebar-Menu.vue';
 import BreadCrumbs from '../BreadCrumbs.vue';
 import FormInput from '../FormInput.vue';
-import AppData from "./app_data.json";
 import axios from 'axios';
 import JwPagination from 'jw-vue-pagination';
-import ModalPRNoCreate from './ModalPRNoCreate.vue';
+import ModalPRNoCreate from './modal/ModalPRNoCreate.vue';
 import PRDetailsForm from './form/pr_details_form.vue';
 const exampleItems = [...Array(150).keys()].map(i => ({ id: (i + 1), name: 'Item ' + (i + 1) }));
 

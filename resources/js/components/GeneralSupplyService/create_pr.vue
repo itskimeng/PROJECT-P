@@ -173,7 +173,7 @@ import BreadCrumbs from '../BreadCrumbs.vue';
 import FormInput from '../FormInput.vue';
 import AppData from "./app_data.json";
 import axios from 'axios';
-import ModalPRNoCreate from './ModalPRNoCreate.vue';
+import ModalPRNoCreate from './modal/ModalPRNoCreate.vue';
 
 export default {
     name: 'create_new',
